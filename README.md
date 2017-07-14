@@ -24,7 +24,6 @@ runTest.bat - запуск автотестов;
 
 
 # Тестовое задание от компании Revolut
-# QA Test
 # Preparation
 1.	Download the latest Revolut Android app from here:
 https://drive.google.com/file/d/0B-YFwMlhFxhdRnBDcS1qV2N2YTA/view?usp=sharing
