@@ -23,11 +23,9 @@ runTest.bat - запуск автотестов;
 Для генерации отчета необходимо запустить файл report.bat
 
 
-
-#Тестовое задание от компании Revolut
-
-QA Test
-Preparation
+# Тестовое задание от компании Revolut
+# QA Test
+# Preparation
 1.	Download the latest Revolut Android app from here:
 https://drive.google.com/file/d/0B-YFwMlhFxhdRnBDcS1qV2N2YTA/view?usp=sharing
 2.	Login using the test account +44662266 pass 1111
@@ -42,8 +40,7 @@ Visa	4530910000012345	n
 Expiry Date: When using the test card numbers, you can use any date in the future for the expiry date (e.g., 11/18).
 
 
-Test:
-
+# Test:
 1.	MAIN TEST: Design a full set of regression tests for the “Add new beneficiary” flow (accessed from the main bottom menu button (purple) -> “To bank account”).
 
 2.	BONUS POINTS: Find as many bugs as you can. Put together a document detailing these bugs in whatever way you see fit.
