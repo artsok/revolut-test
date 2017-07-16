@@ -1,6 +1,8 @@
 package com.revolut.qa.entries.transfer;
 
 import com.revolut.qa.entries.BasePage;
+import com.revolut.qa.entries.auth.message.DeleteBeneficiaryMsg;
+import com.revolut.qa.utils.entity.BeneficiaryInfo;
 import io.appium.java_client.TouchAction;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -13,9 +15,10 @@ import ru.sbtqa.tag.pagefactory.PageFactory;
 import ru.sbtqa.tag.pagefactory.annotations.ActionTitle;
 import ru.sbtqa.tag.pagefactory.annotations.ElementTitle;
 import ru.sbtqa.tag.pagefactory.annotations.PageEntry;
+import ru.sbtqa.tag.pagefactory.exceptions.SwipeException;
 
-import java.util.List;
-
+import static java.util.Objects.isNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static ru.sbtqa.tag.datajack.Stash.getValue;
 import static ru.sbtqa.tag.pagefactory.PageFactory.getDriver;
@@ -51,6 +54,7 @@ public class BankTransferPage extends BasePage {
     public BankTransferPage() {
         initElements(getDriver(), this);
         waitUntilElementPresent(itemTitle);
+        log.info("Opened Bank Transfer Page");
     }
 
     @ActionTitle("checking that new beneficiary appear in list of beneficiaries")
@@ -58,7 +62,6 @@ public class BankTransferPage extends BasePage {
         String firstName = getValue("Legal first name");
         String lastName = getValue("Legal last name");
         String iban = getValue("IBAN/Account number");
-
         log.info("firstName - '{}', lastname - '{}', iban - {}' ", firstName, lastName, iban);
         log.info("Text of title '{}', '{}'", itemTitle.getText(), itemSubtitle.getText());
 
@@ -69,18 +72,65 @@ public class BankTransferPage extends BasePage {
         log.info("Checked - new beneficiary appeared in list of beneficiaries");
     }
 
-    //TODO: Swipe left don't work
+
     @ActionTitle("delete first beneficiary in list")
-    public final void delete() {
-        List<WebElement> list = getDriver().findElements(By.id("com.revolut.revolut.test:id/item_title"));
-        Stash.put("firstBeneficiary", list.get(0).getText());
+    public final void deleteOperation(String confirmInfo) {
+        BeneficiaryInfo beneficiary = getFirstItemInContentOfBeneficiaries();
+        Stash.put("infoAboutDeleteBeneficiary", beneficiary);
+        log.info("Saved to stash beneficiary: title - '{}', accNumber - '{}', sortCode - '{}'",
+                beneficiary.getItemTitle(), beneficiary.getAccountNumber(), beneficiary.getSortCode());
 
-        Dimension size = list.get(0).getSize();
-        Point location = list.get(0).getLocation();
-        new TouchAction(PageFactory.getMobileDriver()).press(location.getX()+ size.width - 50,
-                location.getY()).moveTo(list.get(0), location.getX()+ size.width - 20, location.getY()).perform();
+        WebElement itemsTitle = getDriver().findElements(By.id("com.revolut.revolut.test:id/item_title")).get(0);
+        Dimension size = itemsTitle.getSize();
+        Point location = itemsTitle.getLocation();
+        new TouchAction(PageFactory.getMobileDriver()).press(location.getX()+ size.width, location.getY())
+                .waitAction(1000)
+                .moveTo(location.getX(), location.getY()).release().perform();
+        getDriver().findElement(By.xpath("//android.widget.Button[@text='DELETE']")).click();
 
-
+        DeleteBeneficiaryMsg dbMsg = new DeleteBeneficiaryMsg();
+        if(confirmInfo.equalsIgnoreCase("delete")) {
+            dbMsg.getDelete().click();
+            return;
+        }
+        dbMsg.getCancel().click();
     }
+
+    @ActionTitle("checking that operation finished successfully")
+    public final void deleteOperationSuccess() throws SwipeException {
+        BeneficiaryInfo currentFirstBeneficiary = getFirstItemInContentOfBeneficiaries();
+        BeneficiaryInfo infoAboutDeleteBeneficiary = getValue("infoAboutDeleteBeneficiary");
+        log.info("Current info about first beneficiary title - '{}', AccNum - '{}', SC -'{}'", currentFirstBeneficiary.getItemTitle(),
+                currentFirstBeneficiary.getAccountNumber(), currentFirstBeneficiary.getSortCode());
+        assertFalse("Info about last delete beneficiary same as current first",
+                currentFirstBeneficiary.equals(infoAboutDeleteBeneficiary));
+    }
+
+    @ActionTitle("checking that beneficiary remained in list")
+    public final void deleteOperationWithCancel() {
+        BeneficiaryInfo currentFirstBeneficiary = getFirstItemInContentOfBeneficiaries();
+        BeneficiaryInfo infoAboutDeleteBeneficiary = getValue("infoAboutDeleteBeneficiary");
+        log.info("Current info about first beneficiary title - '{}', AccNum - '{}', SC -'{}'", currentFirstBeneficiary.getItemTitle(),
+                currentFirstBeneficiary.getAccountNumber(), currentFirstBeneficiary.getSortCode());
+        assertTrue(currentFirstBeneficiary.equals(infoAboutDeleteBeneficiary));
+    }
+
+
+    /**
+     * Get first item from list of Beneficiaries on Bank Transfer Page
+     * @return {@link BeneficiaryInfo}
+     */
+    private BeneficiaryInfo getFirstItemInContentOfBeneficiaries() {
+        WebElement itemsTitle = getDriver().findElements(By.id("com.revolut.revolut.test:id/item_title")).get(0);
+        WebElement itemsAccountNumber = getDriver().findElements(By.id("com.revolut.revolut.test:id/item_subtitle1")).get(0);
+        WebElement itemsSortCode = getDriver().findElements(By.id("com.revolut.revolut.test:id/item_subtitle2")).size() > 0 ?
+                getDriver().findElements(By.id("com.revolut.revolut.test:id/item_subtitle2")).get(0) : null;
+        if(isNull(itemsSortCode)) {
+            return new BeneficiaryInfo(itemsTitle.getText(), itemsAccountNumber.getText(), "");
+        }
+        return new BeneficiaryInfo(itemsTitle.getText(), itemsAccountNumber.getText(), itemsSortCode.getText());
+    }
+
+
 
 }
