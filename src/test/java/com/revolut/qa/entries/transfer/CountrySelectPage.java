@@ -1,7 +1,6 @@
 package com.revolut.qa.entries.transfer;
 
 import com.revolut.qa.entries.BasePage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.sbtqa.tag.pagefactory.annotations.ElementTitle;

@@ -4,7 +4,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Developed by root
+ * Developed by sokovets-av
  *
  *
  */

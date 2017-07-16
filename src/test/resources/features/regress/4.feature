@@ -21,7 +21,7 @@ Feature: Delete beneficiary
 
   @regress
   @41
-  Scenario:  Delete beneficiary
+  Scenario:  Delete beneficiary with Cancel Operation
     * page is being opened "Tutorial Page"
     * user (click the button) "Skip"
     * page is being opened "Authorization Page"

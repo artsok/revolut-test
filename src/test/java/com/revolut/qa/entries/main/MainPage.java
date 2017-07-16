@@ -40,6 +40,7 @@ public class MainPage extends BasePage {
     public MainPage() {
         initElements(getDriver(), this);
         log.debug("Opened Main Page");
+        waitUntilElementGetInvisible(transferOptionBtn);
     }
 
     @ActionTitle("get total amount")

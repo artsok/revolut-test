@@ -50,7 +50,6 @@ public class BankTransferPage extends BasePage {
     @FindBy(xpath = "//android.widget.TextView[@resource-id='com.revolut.revolut.test:id/item_subtitle1' and @index=1]")
     private WebElement itemSubtitle;
 
-
     public BankTransferPage() {
         initElements(getDriver(), this);
         waitUntilElementPresent(itemTitle);
@@ -81,11 +80,7 @@ public class BankTransferPage extends BasePage {
                 beneficiary.getItemTitle(), beneficiary.getAccountNumber(), beneficiary.getSortCode());
 
         WebElement itemsTitle = getDriver().findElements(By.id("com.revolut.revolut.test:id/item_title")).get(0);
-        Dimension size = itemsTitle.getSize();
-        Point location = itemsTitle.getLocation();
-        new TouchAction(PageFactory.getMobileDriver()).press(location.getX()+ size.width, location.getY())
-                .waitAction(1000)
-                .moveTo(location.getX(), location.getY()).release().perform();
+        pressAndMoveTo(itemsTitle);
         getDriver().findElement(By.xpath("//android.widget.Button[@text='DELETE']")).click();
 
         DeleteBeneficiaryMsg dbMsg = new DeleteBeneficiaryMsg();
@@ -114,6 +109,38 @@ public class BankTransferPage extends BasePage {
                 currentFirstBeneficiary.getAccountNumber(), currentFirstBeneficiary.getSortCode());
         assertTrue(currentFirstBeneficiary.equals(infoAboutDeleteBeneficiary));
     }
+
+    @ActionTitle("edit first beneficiary in list")
+    public final void editOperationSuccess() {
+        BeneficiaryInfo beneficiary = getFirstItemInContentOfBeneficiaries();
+        Stash.put("infoAboutDeleteBeneficiary", beneficiary);
+        log.info("Saved to stash beneficiary: title - '{}', accNumber - '{}', sortCode - '{}'",
+                beneficiary.getItemTitle(), beneficiary.getAccountNumber(), beneficiary.getSortCode());
+        WebElement itemsTitle = getDriver().findElements(By.id("com.revolut.revolut.test:id/item_title")).get(0);
+        pressAndMoveTo(itemsTitle);
+        getDriver().findElement(By.xpath("//android.widget.Button[@text='EDIT']")).click();
+    }
+
+    @ActionTitle("selecting first beneficiary")
+    public final void selectFirstBeneficiary() {
+        WebElement itemsTitle = getDriver().findElements(By.id("com.revolut.revolut.test:id/item_title")).get(0);
+        itemsTitle.click();
+    }
+
+
+
+    /**
+     * Touch and move to the location
+     * @param element {@link WebElement}
+     */
+    private void pressAndMoveTo(WebElement element) {
+        Dimension size = element.getSize();
+        Point location = element.getLocation();
+        new TouchAction(PageFactory.getMobileDriver()).press(location.getX()+ size.width, location.getY())
+                .waitAction(1000)
+                .moveTo(location.getX(), location.getY()).release().perform();
+    }
+
 
 
     /**

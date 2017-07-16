@@ -3,7 +3,7 @@ Feature: Edit beneficiary
 
   @regress
   @5
-  Scenario:  Delete beneficiary
+  Scenario:  Edit beneficiary
     * page is being opened "Tutorial Page"
     * user (click the button) "Skip"
     * page is being opened "Authorization Page"
@@ -16,4 +16,15 @@ Feature: Edit beneficiary
     * user (choosing transfer type) "To bank account"
     * user (click the button) "Skip"
     * page is being opened "Bank Transfer"
-    # TODO edit functional
+    * user (edit first beneficiary in list)
+    * page is being opened "Choose country and currency"
+    * user (click the button) "Next"
+    * page is being opened "Fill into account details"
+    * user (fill the field) "Mobile phone (optional)" "+79117556228"
+    * user (click the button) "Next"
+    * page is being opened "Address details"
+    * user (click the button) "Save"
+    * page is being opened "Operation State"
+    * user (checking that beneficiary successfully changed)
+    * user (click the button) "Done"
+    * page is being opened "Bank Transfer"

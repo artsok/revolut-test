@@ -16,4 +16,18 @@ Feature: Transfer money to beneficiary
     * user (choosing transfer type) "To bank account"
     * user (click the button) "Skip"
     * page is being opened "Bank Transfer"
-    # TODO functional
+    * user (selecting first beneficiary)
+    * page is being opened "Transfer"
+    * user (fill the field) "Amount" "2"
+    * user (selecting balance) "USD"
+    * user (click the button) "Continue"
+    * page is being opened "Transfer speed"
+    * user (click the button) "Send"
+    * page is being opened "Operation State"
+    * user (checking that transfer is successfull)
+    * user (click the button) "Done"
+    * page is being opened "Main Activity"
+
+
+
+

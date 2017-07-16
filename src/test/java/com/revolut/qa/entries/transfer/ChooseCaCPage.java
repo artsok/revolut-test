@@ -29,6 +29,7 @@ public class ChooseCaCPage extends BasePage {
 
     public ChooseCaCPage() {
         initElements(getDriver(), this);
+        log.info("Opened Choose Country and Currency Page");
     }
 
     @ActionTitle("choosing country")
