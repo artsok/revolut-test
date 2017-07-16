@@ -10,8 +10,8 @@ import ru.sbtqa.tag.cucumber.TagCucumber;
 @RunWith(TagCucumber.class)
 @CucumberOptions(monochrome = true, format = {"pretty"},
       glue = {"ru.sbtqa.tag.pagefactory.stepdefs", "com.revolut.qa.stepdefs"},
-      features = {"src/test/resources/features/"},
-      tags = {"@5"}
+      features = {"src/test/resources/features/"}
+  //    tags = {"@5"}
 )
 public class CucumberTest {
 
