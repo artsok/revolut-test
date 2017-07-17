@@ -30,11 +30,17 @@ public class TutorialPage extends BasePage {
         log.info("Openeded Tutorial Page");
     }
 
+    /**
+     * Read all page with user introduce info
+     * @param count {@link String}
+     */
     @ActionTitle("introducing with tutorial")
-    public final void verifyCreatedChecklist()  {
+    public final void verifyCreatedChecklist(String count)  {
+        int totalSlide = Integer.parseInt(count);
+
         String next = "//android.widget.Button[@text='Continue']";
         String gotIt = "//android.widget.Button[@text='Got it']";
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < totalSlide - 1; i++) {
             clickWebElement(getDriver().findElement(By.xpath(next)));
         }
         clickWebElement(getDriver().findElement(By.xpath(gotIt)));

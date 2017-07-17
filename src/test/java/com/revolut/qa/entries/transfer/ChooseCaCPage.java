@@ -32,6 +32,11 @@ public class ChooseCaCPage extends BasePage {
         log.info("Opened Choose Country and Currency Page");
     }
 
+    /**
+     * Select country from list of countries
+     * @param countryItem {@link String}
+     * @throws SwipeException
+     */
     @ActionTitle("choosing country")
     public final void chooseCountry(String countryItem) throws SwipeException {
         clickWebElement(country);
@@ -41,6 +46,11 @@ public class ChooseCaCPage extends BasePage {
     }
 
 
+    /**
+     * Select currency from list of currencies
+     * @param currencyItem {@link String}
+     * @throws SwipeException
+     */
     @ActionTitle("choosing currency")
     public final void chooseCurrency(String currencyItem) throws SwipeException {
         clickWebElement(currency);

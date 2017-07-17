@@ -13,6 +13,7 @@ import static org.openqa.selenium.By.xpath;
 import static ru.sbtqa.tag.pagefactory.PageFactory.getDriver;
 import static ru.sbtqa.tag.pagefactory.PageFactory.initElements;
 import static ru.sbtqa.tag.pagefactory.extensions.DriverExtension.waitUntilElementGetInvisible;
+import static ru.sbtqa.tag.pagefactory.extensions.DriverExtension.waitUntilElementPresent;
 
 /**
  * Developed by sokovets-av
@@ -39,10 +40,14 @@ public class MainPage extends BasePage {
 
     public MainPage() {
         initElements(getDriver(), this);
+        waitUntilElementPresent(transferOptionBtn);
         log.debug("Opened Main Page");
-        waitUntilElementGetInvisible(transferOptionBtn);
     }
 
+    /**
+     * Get total amount from main page
+     * @return {@link String}
+     */
     @ActionTitle("get total amount")
     public final String getAmount()  {
         String totalAmount = amountInt.getText() + amountDot.getText() + amountFractional.getText();
@@ -50,6 +55,10 @@ public class MainPage extends BasePage {
         return totalAmount;
     }
 
+    /**
+     * Choose transfer type
+     * @param option {@link String}
+     */
     @ActionTitle("choosing transfer type")
     public final void chooseTransferOption(String option) {
         final String element = "//android.widget.TextView[@text='%s']";

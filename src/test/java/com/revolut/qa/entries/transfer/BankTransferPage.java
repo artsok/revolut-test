@@ -44,6 +44,10 @@ public class BankTransferPage extends BasePage {
     @FindBy(id = "com.revolut.revolut.test:id/delete_beneficiary")
     private WebElement delete;
 
+    @ElementTitle(value = "Menu Action Info")
+    @FindBy(id = "com.revolut.revolut.test:id/menu_action_info")
+    private WebElement menuActionInfo;
+
     @FindBy(xpath = "//android.widget.TextView[@resource-id='com.revolut.revolut.test:id/item_title' and @index=0]")
     private WebElement itemTitle;
 
@@ -56,6 +60,9 @@ public class BankTransferPage extends BasePage {
         log.info("Opened Bank Transfer Page");
     }
 
+    /**
+     * Check that new beneficiary appear in list of beneficiaries
+     */
     @ActionTitle("checking that new beneficiary appear in list of beneficiaries")
     public final void newBeneficiaryCreated() {
         String firstName = getValue("Legal first name");
@@ -71,7 +78,10 @@ public class BankTransferPage extends BasePage {
         log.info("Checked - new beneficiary appeared in list of beneficiaries");
     }
 
-
+    /**
+     * Remove first beneficiary from list beneficiaries
+     * @param confirmInfo {@link String}
+     */
     @ActionTitle("delete first beneficiary in list")
     public final void deleteOperation(String confirmInfo) {
         BeneficiaryInfo beneficiary = getFirstItemInContentOfBeneficiaries();
@@ -91,6 +101,10 @@ public class BankTransferPage extends BasePage {
         dbMsg.getCancel().click();
     }
 
+    /**
+     * Check that delete operation end successfull
+     * @throws SwipeException
+     */
     @ActionTitle("checking that operation finished successfully")
     public final void deleteOperationSuccess() throws SwipeException {
         BeneficiaryInfo currentFirstBeneficiary = getFirstItemInContentOfBeneficiaries();
@@ -101,6 +115,9 @@ public class BankTransferPage extends BasePage {
                 currentFirstBeneficiary.equals(infoAboutDeleteBeneficiary));
     }
 
+    /**
+     * Check state when we cancel from delete operation
+     */
     @ActionTitle("checking that beneficiary remained in list")
     public final void deleteOperationWithCancel() {
         BeneficiaryInfo currentFirstBeneficiary = getFirstItemInContentOfBeneficiaries();
@@ -110,6 +127,9 @@ public class BankTransferPage extends BasePage {
         assertTrue(currentFirstBeneficiary.equals(infoAboutDeleteBeneficiary));
     }
 
+    /**
+     * Check edit operation
+     */
     @ActionTitle("edit first beneficiary in list")
     public final void editOperationSuccess() {
         BeneficiaryInfo beneficiary = getFirstItemInContentOfBeneficiaries();
@@ -121,6 +141,9 @@ public class BankTransferPage extends BasePage {
         getDriver().findElement(By.xpath("//android.widget.Button[@text='EDIT']")).click();
     }
 
+    /**
+     * Select first beneficiary from list of beneficiaries
+     */
     @ActionTitle("selecting first beneficiary")
     public final void selectFirstBeneficiary() {
         WebElement itemsTitle = getDriver().findElements(By.id("com.revolut.revolut.test:id/item_title")).get(0);

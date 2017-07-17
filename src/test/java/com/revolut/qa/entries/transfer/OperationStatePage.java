@@ -32,6 +32,10 @@ public class OperationStatePage extends BasePage {
         waitUntilElementPresent(title);
     }
 
+    /**
+     * Check operation state
+     * @param state {@link String}
+     */
     @ActionTitle("checking that beneficiary")
     public final void checkingStatusOfOperation(String state) {
         String firstName = getValue("Legal first name");
@@ -43,12 +47,18 @@ public class OperationStatePage extends BasePage {
                 .forEach(str -> assertTrue("assertion failed", text.contains(str)));
     }
 
+    /**
+     * Check that beneficiary successfull change
+     */
     @ActionTitle("checking that beneficiary successfully changed")
     public final void checkingChangedOperation() {
         String text = title.getText();
         assertTrue("assertion failed", text.contains("successfully changed"));
     }
 
+    /**
+     * Check that transfer done
+     */
     @ActionTitle("checking that transfer is successfull")
     public final void checkingTransferOperation() {
         String text = title.getText();

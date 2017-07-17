@@ -5,7 +5,7 @@ Feature: Add new beneficiary
   @1
   Scenario Outline: Add new beneficiary. Without optional. [To myself]
     * page is being opened "Tutorial Page"
-    * user (introducing with tutorial)
+    * user (introducing with tutorial) "5"
     * page is being opened "Authorization Page"
     * user (fill the field) "PhoneNumber" "662266"
     * user (click the button) "Next"

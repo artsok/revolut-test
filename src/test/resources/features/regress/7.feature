@@ -16,4 +16,7 @@ Feature: Transfer tutorial
     * user (choosing transfer type) "To bank account"
     * user (click the button) "Skip"
     * page is being opened "Bank Transfer"
-    # TODO functional
+    * user (click the button) "Menu Action Info"
+    * page is being opened "Tutorial Page"
+    * user (introducing with tutorial) "3"
+    * page is being opened "Bank Transfer"

@@ -27,6 +27,11 @@ public class CountrySelectPage extends BasePage {
     }
 
 
+    /**
+     * Select country with swipe down
+     * @param countryItem {@link String}
+     * @throws SwipeException
+     */
     void chooseCountryItem(String countryItem) throws SwipeException {
         chooseItemWithSwipe(countryItem, xpath(format("//android.widget.TextView[@text='%s']", countryItem)));
     }

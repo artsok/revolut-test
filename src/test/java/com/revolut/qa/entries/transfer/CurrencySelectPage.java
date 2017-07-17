@@ -15,7 +15,7 @@ import static ru.sbtqa.tag.pagefactory.PageFactory.initElements;
 /**
  * Developed by sokovets-av
  */
-@PageEntry(title = "Currency country")
+@PageEntry(title = "Choose currency")
 public class CurrencySelectPage extends BasePage {
 
     @ElementTitle(value = "Search Currency")
@@ -26,6 +26,11 @@ public class CurrencySelectPage extends BasePage {
         initElements(getDriver(), this);
     }
 
+    /**
+     * Select currency with swipe down
+     * @param currencyItem {@link String}
+     * @throws SwipeException
+     */
     void chooseCurrencyItem(String currencyItem) throws SwipeException {
         chooseItemWithSwipe(currencyItem, xpath(format("//android.widget.TextView[@text='%s']", currencyItem)));
     }

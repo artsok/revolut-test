@@ -57,6 +57,10 @@ public class AddressDetailsPage extends BasePage {
         initElements(getDriver(), this);
     }
 
+    /**
+     * Check autocomplete feature
+     * @param dataTable {@link DataTable}
+     */
     @ActionTitle("checking that autocomplete work")
     public final void checkAutocomplete(DataTable dataTable) {
         dataTable.asList(String.class).forEach(element -> {
@@ -69,6 +73,11 @@ public class AddressDetailsPage extends BasePage {
         });
     }
 
+    /**
+     * Find country
+     * @param countryItem {@link String}
+     * @throws SwipeException {@link SwipeException}
+     */
     @ActionTitle("finding country")
     public final void findCountry(String countryItem) throws SwipeException {
         country.click();

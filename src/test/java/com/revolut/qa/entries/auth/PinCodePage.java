@@ -21,6 +21,10 @@ public class PinCodePage extends BasePage {
         log.info("Opened PinCode Page");
     }
 
+    /**
+     * Fill pass code
+     * @param passCode {@link String}
+     */
     @ActionTitle("entering passcode")
     public void enterPin(final String passCode)  {
         char[] charArray = passCode.toCharArray();

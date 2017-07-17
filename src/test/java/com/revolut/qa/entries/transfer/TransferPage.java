@@ -38,6 +38,10 @@ public class TransferPage extends BasePage {
         log.info("Opened Transfer Page");
     }
 
+    /**
+     * Select type of balance
+     * @param currency {@link String}
+     */
     @ActionTitle("selecting balance")
     public void selectBalance(String currency) {
         getDriver().findElement(By.id("com.revolut.revolut.test:id/arrow_down")).click();

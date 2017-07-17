@@ -40,12 +40,24 @@ public class BasePage extends Page {
     @FindBy(xpath = "//android.widget.Button[@text='Save']")
     protected WebElement save;
 
+    /**
+     * Choose webelement with swipe
+     * @param swipeToText
+     * @param by
+     * @throws SwipeException
+     */
     protected final void chooseItemWithSwipe(String swipeToText, By by) throws SwipeException {
         swipeToText(DOWN, swipeToText, MatchStrategy.CONTAINS);
         WebElement element = getDriver().findElement(by);
         clickWebElement(element);
     }
 
+    /**
+     * Send keys to field
+     * @param elementTitle {@link String}
+     * @param text {@link String}
+     * @throws PageException
+     */
     @Override
     public void fillField(String elementTitle, String text) throws PageException {
         WebElement webElement = getElementByTitle(elementTitle);
@@ -55,12 +67,20 @@ public class BasePage extends Page {
         log.info("Filling field on WebElement with tagName - '{}' with text '{}'", webElement.getTagName(), text);
     }
 
+    /**
+     * Click to the webelement
+     * @param webElement {@link WebElement}
+     */
     @Override
     public void clickWebElement(WebElement webElement) {
         log.info("Clicking on WebElement with tagName - '{}'", webElement.getTagName());
         super.clickWebElement(webElement);
     }
 
+    /**
+     * Save value to HashMap
+     * @param dataTable {@link DataTable}
+     */
     @ActionTitle("save temp values to stash")
     public final void saveToStash(DataTable dataTable) {
         dataTable.asList(String.class).forEach(element -> {

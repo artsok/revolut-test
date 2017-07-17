@@ -25,6 +25,10 @@ public class ChooseBalanceMsg extends BasePage {
         log.info("Opened Choose Balance Massage");
     }
 
+    /**
+     * Choose balance type on pop up message
+     * @param currency {@link String}
+     */
     public final void chooseBalance(String currency) {
         getDriver().findElement(By.xpath("//android.widget.TextView[contains(@text, '" + currency + "')]")).click();
     }
